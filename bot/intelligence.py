@@ -1,23 +1,20 @@
 import requests
 
-def analyze_question(question):
-    return question
+API_URL = "https://api.example.com/chat"
 
-def generate_response(question):
+def handle_query(question):
 
-    # Aqui você poderia enviar a pergunta para uma IA
-    # Por enquanto vamos só responder perguntas simples
+    data = {
+        "message": question
+    }
 
-    question = question.lower()
+    try:
+        response = requests.post(API_URL, json=data)
 
-    if "capital" in question and "frança" in question:
-        return "A capital da França é Paris."
+        if response.status_code == 200:
+            return response.json()["response"]
 
-    if "2+2" in question:
-        return "2 + 2 = 4"
+    except:
+        pass
 
-    return "Ainda não sei responder essa pergunta."
-
-def handle_query(query):
-    question = analyze_question(query)
-    return generate_response(question)
+    return "Não consegui gerar resposta."
